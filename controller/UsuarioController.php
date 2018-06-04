@@ -55,7 +55,7 @@ class UsuarioController {
         $usuarioActual->setEdad($_POST['edad']);
         $usuarioActual->setGenero($_POST['genero']);
         $resultado = $usuarioModel->insertarUsuario($usuarioActual);
-        
+        echo $_POST['email'];
         if($resultado === 1)
             $this->view->show("PrincipalView");
         else
