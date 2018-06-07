@@ -49,12 +49,17 @@ class AndroidController {
         $modelo = new SitioModel();
         $precio = $_GET['precio'];
         $tipo_viaje = $_GET['tipo_viaje'];
+        $ubicacion = $_GET['ubicacion'];
         $consulta = $modelo->obtenerTodosLosSitios();
         $registros = [];
         $arrayPrecio = array(
             '100-1000' => 1,
             '1001-5000' => 2,
             '5001-15000' => 3,
+        );
+        $arraUbicacion = array(
+            'Rural'=>1,
+            'Urbano'=>2
         );
         $arrayTipoViaje = array(
             'Negocio' => 1,
@@ -68,19 +73,49 @@ class AndroidController {
                 'precio' => utf8_encode($arrayPrecio[$consulta[$i]->getPrecio()]),
                 'tipo_viaje' => utf8_encode($arrayTipoViaje[$consulta[$i]->getTipo_de_viaje()]),
                 'titulo' => utf8_encode($consulta[$i]->getTitulo()),
+                'imagen'=>$consulta[$i]->getImagen(),
+                'video'=>utf8_encode($consulta[$i]->getVideo()),
                 'descripcion' => utf8_encode($consulta[$i]->getDescripcion()),
                 'latitud' => utf8_encode($consulta[$i]->getLatitud()),
                 'longitud' => utf8_encode($consulta[$i]->getLongitud()),
-                'clase' => utf8_encode($consulta[$i]->getUbicacion()));
+                'ubicacion' => utf8_encode($arraUbicacion[$consulta[$i]->getUbicacion()]),
+                );
+            
             array_push($registros, $sitioActual);
         }
 
-        $vectorA = array('precio' => $precio, 'tipo_viaje' => $tipo_viaje);
-        $variables = ['precio', 'tipo_viaje'];
+        $vectorA = array('precio' => $precio, 'tipo_viaje' => $tipo_viaje,'ubicacion'=>$ubicacion);
+        $variables = ['precio', 'tipo_viaje','ubicacion'];
 
         $resultado = euclides($vectorA, $registros, $variables);
         $final;
         echo json_encode(( array("sitios"=>$resultado)));
+    }
+
+    public function obtenerSitios() {
+        require 'model/SitioModel.php';
+        require 'public/domain/Sitio.php';
+        $modelo = new SitioModel();
+        $consulta = $modelo->obtenerTodosLosSitios();
+        $registros = [];
+
+        for ($i = 0; $i < count($consulta); $i++) {
+            $sitioActual = array(
+                'precio' => utf8_encode($consulta[$i]->getPrecio()),
+                'tipo_viaje' => utf8_encode($consulta[$i]->getTipo_de_viaje()),
+                'titulo' => utf8_encode($consulta[$i]->getTitulo()),
+                'imagen'=> utf8_encode($consulta[$i]->getImagen()),
+                'video'=> utf8_encode($consulta[$i]->getVideo()),
+                'descripcion' => utf8_encode($consulta[$i]->getDescripcion()),
+                'latitud' => utf8_encode($consulta[$i]->getLatitud()),
+                'longitud' => utf8_encode($consulta[$i]->getLongitud()),
+                'ubicacion' => utf8_encode($consulta[$i]->getUbicacion()),
+                );
+            
+            array_push($registros, $sitioActual);
+        }
+
+        echo json_encode(( array("sitios"=>$registros)));
     }
 
     public function registrarse() {
@@ -104,6 +139,28 @@ class AndroidController {
             echo json_encode($respuesta);
         }
     }
+    
+    public function actualizarDatos(){
+        require 'model/UsuarioAndroidModel.php';
+        require 'public/domain/Usuario.php';
+        header('Content-Type: application/json');
+        $body = json_decode(file_get_contents("php://input"), true);
+        $usuarioModel = new UsuarioAndroidModel();
+        $usuarioActual = new Usuario();
+        $usuarioActual->setCorreo($body['email']);
+        $usuarioActual->setContrasena($body['password']);
+        $usuarioActual->setNombre($body['nombre']);
+        $usuarioActual->setTipoUsuario('u');
+        $usuarioActual->setEdad($body['edad']);
+        $resultado = $usuarioModel->actualizarUsuario($usuarioActual);
+        
+        if($resultado === 1)
+            echo json_encode(array("resultado"=>1));
+        else
+            echo json_encode(array("resultado"=>$body));
+;
+    }//Fin de la función actualizarDatos.
+
 
 //Fin de la función registrarse.
 }

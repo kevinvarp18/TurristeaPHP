@@ -4,8 +4,8 @@
     $config->set('controllerFolder', 'controller/');
     $config->set('modelFolder', 'model/');
     $config->set('viewFolder', 'view/');
-    $config->set('dbhost', '127.0.0.1');
-    $config->set('dbname', 'pruebas');
-    $config->set('dbuser', 'root');
-    $config->set('dbpass', '');
+    $config->set('dbhost', '163.178.107.130:3306');
+    $config->set('dbname', 'dbTurris');
+    $config->set('dbuser', 'laboratorios');
+    $config->set('dbpass', 'UCRSA.118');
 ?>

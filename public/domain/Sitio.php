@@ -16,6 +16,7 @@ class Sitio {
  private $precio;
  private $ubicacion;
  private $imagen;
+ private $video;
  private $latitud;
  private $longitud;
  private $tipo_de_viaje;
@@ -33,12 +34,22 @@ class Sitio {
         $this->descripcion="";
         $this->titulo="";
         $this->imagen="";
+        $this->video="";
+
     }
     
     function getId() {
         return $this->id;
     }
+ 
+    function getImagen() {
+        return $this->imagen;
+    }
     
+    function setImagen($imagen){
+        $this->imagen=$imagen;
+    }
+            
     function getPrecio() {
         return $this->precio;
     }
@@ -67,6 +78,9 @@ class Sitio {
         return $this->longitud;
     }
 
+    function getVideo() {
+        return $this->video;
+    }
     function setPrecio($precio) {
         $this->precio = $precio;
     }
@@ -92,6 +106,10 @@ class Sitio {
 
     function setLatitud($latitud) {
         $this->latitud = $latitud;
+    }
+    
+    function setVideo($video) {
+        $this->video = $video;
     }
 
     function setLongitud($longitud) {

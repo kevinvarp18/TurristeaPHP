@@ -37,6 +37,9 @@ class SitioModel {
             $sitio->setTitulo($data[$i]["titulo"]);
             $sitio->setPrecio($data[$i]["precio"]);
             $sitio->setUbicacion($data[$i]["ubicacion"]);
+            $sitio->setVideo($data[$i]["video"]);
+            $sitio->setImagen($data[$i]["imagen"]);
+
             array_push($sitiosArray, $sitio);
         }/* Fin del for i, que inserta en un arreglo todos los registros de los 
         usuarios que existen en la base de datos. */

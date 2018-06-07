@@ -51,22 +51,18 @@ function euclides($vectorA, $registrosBaseDatos, $variables) {
             if ($cont >= 0) {
                     if ($diferenciaMin[$i] === null) {
                         $diferenciaMin[$i] = $diferencia;
-                        $clase = $registroActual['clase'];
                         $sitios[$contSitios] = $registroActual;
                     } else if ($diferenciaMin[$i] > $diferencia && $diferenciaMin[$i-1]<$diferencia) {
                         $diferenciaMin[$i] = $diferencia;
-                        $clase = $registroActual['clase'];
                         $sitios[$contSitios] = $registroActual;
                     }
             } else {
 
                 if ($diferenciaMin[$i] === null) {
                     $diferenciaMin[$i] = $diferencia;
-                    $clase = $registroActual['clase'];
                     $sitios[$contSitios] = $registroActual;
                 } else if ($diferenciaMin[$i] > $diferencia) {
                         $diferenciaMin[$i] = $diferencia;
-                        $clase = $registroActual['clase'];
                         $sitios[$contSitios] = $registroActual;
                 }//if-else
             }//primer registro

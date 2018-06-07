@@ -22,6 +22,12 @@ class UsuarioAndroidModel {
         return $resultado;
     }//Fin de la función insertarUsuario.
     
+     public function actualizarUsuario($usuario){ 
+        $query = $this->db->prepare("call sp_actualizar_usuario('".$usuario->getCorreo()."','".$usuario->getContrasena()."','".$usuario->getNombre()."',".$usuario->getEdad().")");
+        $query->execute();
+        $resultado = $query->rowCount();
+        return $resultado;
+    }//Fin de la función actualizarUsuario.
     
     public function obtenerTodosLosUsuarios() {
         $query = $this->db->prepare("SELECT * FROM usuario");
