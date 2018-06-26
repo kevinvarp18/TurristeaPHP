@@ -10,7 +10,7 @@ class UsuarioModel {
     }//Fin del constructor.
 
     public function obtenerTodosLosUsuarios() {
-        $query = $this->db->prepare("SELECT * FROM tbUsuario");
+        $query = $this->db->prepare("SELECT * FROM usuario");
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
@@ -18,9 +18,9 @@ class UsuarioModel {
         $usuarioArray = [];
         for ($i = 0; $i < $rows; $i++) {
             $usuarioTemp = new Usuario();
-            $usuarioTemp->setCorreo($data[$i]["TC_Correo"]);
-            $usuarioTemp->setContrasena($data[$i]["TC_Contrasena"]);
-            $usuarioTemp->setTipoUsuario($data[$i]["TC_TipoUsuario"]);
+            $usuarioTemp->setCorreo($data[$i]["email"]);
+            $usuarioTemp->setContrasena($data[$i]["password"]);
+            $usuarioTemp->setTipoUsuario($data[$i]["tipoUsuario"]);
             array_push($usuarioArray, $usuarioTemp);
         }/* Fin del for i, que inserta en un arreglo todos los registros de los 
         usuarios que existen en la base de datos. */
@@ -31,29 +31,36 @@ class UsuarioModel {
     de datos. */
     
     public function insertarUsuario($usuario){
-        $query = $this->db->prepare("call sp_registrar_usuario('".$usuario->getCorreo()."','".$usuario->getContrasena()."','".$usuario->getNombre()."',".$usuario->getEdad().",'".$usuario->getGenero()."')");
-        $query->execute();
+        $query = $this->db->prepare("INSERT INTO usuario(email, nombre, tipoUsuario, edad, genero, password) VALUES (?, ?, ?, ?, ?, ?)");
+        $query->execute(array($usuario->getCorreo(), $usuario->getNombre(), 'u', $usuario->getEdad(), $usuario->getGenero(), $usuario->getContrasena()));
         $resultado = $query->rowCount();
         return $resultado;
     }//Fin de la función insertarUsuario.
     
     public function obtenerDatosUsuario($correo){
-        $query = $this->db->prepare("SELECT * FROM tbUsuario WHERE TC_Correo = ?");
+        $query = $this->db->prepare("SELECT * FROM usuario WHERE email = ?");
         $query->execute(array($correo));
         $data = $query->fetch();
         $query->closeCursor();
         $usuario = new Usuario();
-        $usuario->setCorreo($data["TC_Correo"]);
-        $usuario->setContrasena($data["TC_Contrasena"]);
-        $usuario->setNombre($data["TC_NombreCompleto"]);
-        $usuario->setEdad($data["TN_Edad"]);
-        $usuario->setGenero($data["TC_Genero"]);
+        $usuario->setCorreo($data["email"]);
+        $usuario->setContrasena($data["password"]);
+        $usuario->setNombre($data["nombre"]);
+        $usuario->setEdad($data["edad"]);
+        $usuario->setGenero($data["genero"]);
         return $usuario;
     }//Fin de la función obtenerDatosUsuario.
     
-    public function actualizarUsuario($usuario){ 
-        $query = $this->db->prepare("call sp_actualizar_usuario('".$usuario->getCorreo()."','".$usuario->getContrasena()."','".$usuario->getTipoUsuario()."','".$usuario->getNombre()."',".$usuario->getEdad().",'".$usuario->getGenero()."')");
-        $query->execute();
+    public function actualizarUsuario($usuario){
+        $query = $this->db->prepare("UPDATE usuario SET nombre = ?, edad = ?, genero = ?, password = ? WHERE email = ?");
+        $query->execute(array($usuario->getNombre(), $usuario->getEdad(), $usuario->getGenero(), $usuario->getContrasena(),$usuario->getCorreo()));
+        $resultado = $query->rowCount();
+        return $resultado;
+    }//Fin de la función actualizarUsuario.
+    
+    public function insertarIntereses($idUsuario, $rangoPrecio, $tipoLugar, $tipoViaje){
+        $query = $this->db->prepare("INSERT INTO interesesusuario (idCliente, precio, ubicacion, tipo_viaje) VALUES (?, ?, ?, ?)");
+        $query->execute(array($idUsuario, $rangoPrecio, $tipoLugar, $tipoViaje));
         $resultado = $query->rowCount();
         return $resultado;
     }//Fin de la función actualizarUsuario.

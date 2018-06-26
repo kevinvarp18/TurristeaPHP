@@ -11,17 +11,19 @@ include_once 'public/header.php';
                     <form action="?controller=Usuario&action=formularioIntereses" method="post">
                         <span>¿De cuanto dinero dispones?</span><br>
                         <input id="dinero" name="dinero" type="number" required=""><br><br>
-                        <span>¿Tipo de lugar?</span><br>
-                        <select name="lugar" id="lugar">
+                        <span>¿Tipo de viaje?</span><br>
+                        <select name="tipoViaje" id="tipoViaje">
                             <option value="0">Seleccione una opción</option>
-                            <option value="U">Urbano</option>
-                            <option value="M">Montañoso</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Deporte">Deporte</option>
+                            <option value="Familiar">Familiar</option>
+                            <option value="Negocio">Negocio</option>
                         </select><br><br>
-                        <span>¿Que te gustaría hacer en este momento?</span><br>
-                        <select name="abc" id="abc">
+                        <span>¿Tipo de lugar?</span><br>
+                        <select name="tipoLugar" id="tipoLugar">
                             <option value="0">Seleccione una opción</option>
-                            <option value="1">Visitar un sitio o atractivo turístico</option>
-                            <option value="2">Realizar una actividad turística</option>
+                            <option value="Rural">Rural</option>
+                            <option value="Urbano">Urbano</option>
                         </select><br><br>
                         <input type="submit" value="Guardar">
                     </form>

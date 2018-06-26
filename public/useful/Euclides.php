@@ -72,4 +72,4 @@ function euclides($vectorA, $registrosBaseDatos, $variables) {
     }//end for de diferencias
     //Se retorna la clase obtenida
     return $sitios;
-}
+}//Fin de la función euclides.

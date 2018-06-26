@@ -11,10 +11,6 @@ class PrincipalController {
         $this->view->show("PrincipalView");
     }//Fin de la función index.
     
-    public function calificanos(){
-        $this->view->show("CalificanosView");
-    }//Fin de la función calificanos.
-    
     public function contenidoTuristico(){
         $numeroPagina = intval($_GET['numPagina']);
         $this->view->show("ContenidoTuristicoView", $numeroPagina);

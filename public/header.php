@@ -42,12 +42,10 @@
                                 <li><a href="?controller=Principal&action=formularioInteresesView">Formulario intereses</a></li>
                                 <li><a href="?controller=Principal&action=MapaSitio">Mapa sitio</a></li>
                                 <li><a href="?controller=Principal&action=creditos">Informaci&oacute;n</a></li>
-                                <li><a href="?controller=Principal&action=calificanos">Opinión</a></li>
                                 <?php if (!isset($_SESSION['tipoUsuario'])) { ?>
                                     <li><a href="?controller=Principal&action=iniciarSesion">Iniciar Sesi&oacute;n</a></li>
                                     <li><a href="?controller=Principal&action=registrarse">Registrarse</a></li>
                                 <?php } else { ?>
-                                    <li><a href="?controller=Usuario&action=misFavoritos">Favoritos</a></li>
                                     <li><a href="?controller=Usuario&action=actualizarDatosView">Actualizar datos</a></li>
                                     <li><a href="?controller=Usuario&action=cerrarSesion">Cerrar sesi&oacute;n</a></li>
                                 <?php } ?>

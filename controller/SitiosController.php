@@ -1,45 +1,15 @@
 <?php
 
-class AndroidController {
+class SitiosController {
 
     private $view;
 
     public function __construct() {
         $this->view = new View();
-    }//Fin del constructor.
-
-    public function login() {
-        require 'model/UsuarioAndroidModel.php';
-        require 'public/domain/Usuario.php';
-        header('Content-Type: application/json');
-        $body = json_decode(file_get_contents("php://input"), true);
-        $usuarioModel = new UsuarioAndroidModel();
-        $usuarios = $usuarioModel->obtenerTodosLosUsuarios();
-        $usuarioActual = new Usuario();
-        $usuarioActual->setCorreo($body['email']);
-        $usuarioActual->setContrasena($body['password']);
-        $bandera = 0;
-        $tipoUsuario = '';
-        foreach ($usuarios as $usuario) {
-            if (strcmp($usuario->getCorreo(), $usuarioActual->getCorreo()) === 0) {
-                if (strcmp($usuario->getContrasena(), $usuarioActual->getContrasena()) === 0) {
-                    $bandera = 1;
-                    break;
-                }//Fin del if que verifica si las contraseñas son iguales.
-            }//Fin del if que verifica si los correos son iguales.
-        }//Fin del foreach.
-
-        if ($bandera === 1) {
-            $respuesta = array("resultado" => "correcto");
-            echo json_encode($respuesta);
-        } else {
-            $respuesta = array("resultado" => "incorrecto");
-            echo json_encode($respuesta);
-        }//else-if
-    }//Fin de la función login que realiza la autenticación del usuario.
-
+    }//fin del constructor.
+    
     public function obtenerRecomendaciones() {
-        include 'public/useful/EuclidesAlgoritmo.php';
+        include 'public/useful/Euclides.php';
         require 'model/SitioModel.php';
         require 'public/domain/Sitio.php';
         $modelo = new SitioModel();
@@ -113,48 +83,7 @@ class AndroidController {
 
         echo json_encode(( array("sitios"=>$registros)));
     }//Fin de la función obtenerSitios que obtiene todos los sitios turísticos que se tienen registrados en la base de datos.
+}
 
-    public function registrarse() {
-        require 'model/UsuarioAndroidModel.php';
-        require 'public/domain/Usuario.php';
-        header('Content-Type: application/json');
-        $body = json_decode(file_get_contents("php://input"), true);
-        $usuarioModel = new UsuarioAndroidModel();
-        $usuarioActual = new Usuario();
-        $usuarioActual->setCorreo($body["email"]);
-        $usuarioActual->setContrasena($body["password"]);
-        $usuarioActual->setNombre($body["nombre"]);
-        $usuarioActual->setEdad($body["edad"]);
-        $usuarioActual->setGenero($body["genero"]);
-        $resultado = $usuarioModel->insertarUsuario($usuarioActual);
-        if ($resultado === 1) {
-            $respuesta = array("resultado" => "guardado");
-            echo json_encode($respuesta);
-        } else {
-            $respuesta = array("resultado" => "Error(121)");
-            echo json_encode($respuesta);
-        }//Fin del if que verifica si el usuario se pudo registrar exitosamente o no.
-    }//Fin de la función registrarse, que intenta agregar un nuevo usuario en la base de datos, en caso de que este no exista.
-    
-    public function actualizarDatos(){
-        require 'model/UsuarioAndroidModel.php';
-        require 'public/domain/Usuario.php';
-        header('Content-Type: application/json');
-        $body = json_decode(file_get_contents("php://input"), true);
-        $usuarioModel = new UsuarioAndroidModel();
-        $usuarioActual = new Usuario();
-        $usuarioActual->setCorreo($body['email']);
-        $usuarioActual->setContrasena($body['password']);
-        $usuarioActual->setNombre($body['nombre']);
-        $usuarioActual->setTipoUsuario('u');
-        $usuarioActual->setEdad($body['edad']);
-        $resultado = $usuarioModel->actualizarUsuario($usuarioActual);
-        
-        if($resultado === 1)
-            echo json_encode(array("resultado"=>1));
-        else
-            echo json_encode(array("resultado"=>$body));
+?>
 
-    }//Fin de la función actualizarDatos, que actualiza los datos de un usuario específico.
-
-}//Fin de la clase AndroidController.

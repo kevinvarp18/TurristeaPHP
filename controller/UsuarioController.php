@@ -92,13 +92,30 @@ class UsuarioController {
     
     public function formularioIntereses(){
         session_start();
-        $_SESSION['intereses'] = 1;
-        $this->view->show("SitiosInteresView", 1);
+        $rangoPrecio = '';
+        $resultado = 0;
+        
+        if((intval($_POST['dinero']) >= 100 && intval($_POST['dinero']) <= 1000) || intval($_POST['dinero']) < 100){
+            $rangoPrecio = '100-1000';
+        }else if (intval($_POST['dinero']) >= 1001 && intval($_POST['dinero']) <= 5000){
+            $rangoPrecio = '1001-5000';
+        }else if ((intval($_POST['dinero']) >= 5001 && intval($_POST['dinero']) <= 15000) || intval($_POST['dinero']) > 15000){
+            $rangoPrecio = '5001-15000';
+        }//Verifica dentro de un rango la cantidad de dinero que dispone el usuario.
+        
+        if(isset($_SESSION['correo'])){
+            require 'model/UsuarioModel.php';
+            $usuarioModel = new UsuarioModel();
+            $resultado = $usuarioModel->insertarIntereses($_SESSION['correo'], $rangoPrecio, $_POST['tipoLugal'], $_POST['tipoViaje']);
+            if($resultado === 0){
+                $this->view->show("FormularioInteresesView");
+            }else{
+                
+            }
+        }else{
+            
+        }
     }//Fin de la función formularioIntereses.
-    
-    public function misFavoritos(){
-        $this->view->show("FavoritosView");
-    }//Fin de la función misFavoritos.
 
   }//Fin de la clase UsuarioController.
 ?>

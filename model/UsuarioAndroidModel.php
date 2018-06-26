@@ -1,9 +1,5 @@
 <?php
-/**
- * Description of UsuarioAndroidModel
- *
- * @author Alfonso
- */
+
 class UsuarioAndroidModel {
     
     private $db;

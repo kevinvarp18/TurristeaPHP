@@ -1,16 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of SitioModel
- *
- * @author Alfonso
- */
 class SitioModel {
     private $db;
 
@@ -45,7 +34,7 @@ class SitioModel {
         usuarios que existen en la base de datos. */
         
         return $sitiosArray;
-    }/* Fin del la función obtenerTodosLosUsuarios, que retorna el arreglo con 
-    todos registros de los usuarios que existen en su respectiva tabla de la  base 
+    }/* Fin del la función obtenerTodosLosSitios, que retorna el arreglo con 
+    todos registros de los sitios turísticos que existen en su respectiva tabla de la  base 
     de datos. */
-}
+}//Fin de la clase SitioModel.
