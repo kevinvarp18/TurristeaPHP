@@ -4,9 +4,6 @@ include_once 'public/header.php';
 
 <div class="about" id="about">
     <div class="container">
-        <div class="about-info">
-            <h3>¡Bienvenido a Turristea!</h3>
-        </div>
         <div class="about-top-grids">
             <div class="col-md-12 about-top-grid">
                 <p>Esta aplicación es una nueva oportunidad para ti, de manera que podrás acceder a consultar nuestra información con mayor facilidad a través de nuestro sitio web, en cualquier dispositivo con acceso a internet. Con esta aplicación podrás conocer sitios y actividades turísticas de tu interés del cantón de Turrialba de una manera más fácil.</p>

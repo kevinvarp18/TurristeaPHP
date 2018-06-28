@@ -9,7 +9,6 @@ class SitioModel {
     }//Fin del constructor.
     
     public function insertarSitio($sitio){
-        echo "call sp_registrar_sitio('".$sitio->getPrecio()."', '".$sitio->getUbicacion()."', '".$sitio->getTipo_de_viaje()."', '".$sitio->getDescripcion()."', '".$sitio->getTitulo()."', '".$sitio->getLatitud()."', '".$sitio->getLongitud()."', '".$sitio->getImagen()."', '".$sitio->getVideo()."')";
         $query = $this->db->prepare("call sp_registrar_sitio('".$sitio->getPrecio()."', '".$sitio->getUbicacion()."', '".$sitio->getTipo_de_viaje()."', '".$sitio->getDescripcion()."', '".$sitio->getTitulo()."', '".$sitio->getLatitud()."', '".$sitio->getLongitud()."', '".$sitio->getImagen()."', '".$sitio->getVideo()."')");
         $query->execute();
         $resultado = $query->rowCount();

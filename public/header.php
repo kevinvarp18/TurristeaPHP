@@ -73,9 +73,9 @@
                     </div>
                 </div>
                 <div class="w3layouts-text">
-                    <h2><span>Turristea</span></h2>
+                    <h2><span>Bienvenido(s) turista(s)</span></h2>
                     <div class="border"></div>
-                    <p>Un lugar donde podrás encontrar lo que estas necesitando sin tener que buscarlo</p>
+                    <p>¿Tenés dudas sobre a donde viajar? Entra a Turristea y nosotros nos encargaremos de mostrarte los sitios más destacados y aledaños al cant&oacute;n de Turrialba.</p>
                 </div>
             </div>
         </div>

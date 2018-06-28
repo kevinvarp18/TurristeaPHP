@@ -1,0 +1,5 @@
+La URL para acceder al sitio es: https://tareab41250.000webhostapp.com/TurristeaPHP/
+
+Dentro del proyecto, hay 2 archivos que son los encargados de hacer las funcionalidades de recomendación y clasificación de los sitios:
+1. Euclides: EuclidesAlgoritmo.php, se encuentra en la dirección "TurristeaPHP\public\useful\", este archivo es el que contiene el algoritmo de Euclides que se utiliza para hacer la recomendación de los sitios turísticos según los criterios marcados por el usuario. 
+2. Bayes: Bayes.php, se encuentra también en la dirección "TurristeaPHP\public\useful", este archivo se encarga de calcular con base en el precio y la ubicación de los registros previamente ingresados, la inserción de un nuevo sitio y definir la clase que esta tendrá.
