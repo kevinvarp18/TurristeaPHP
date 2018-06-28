@@ -20,7 +20,7 @@ include_once 'public/header.php';
                             <option value="Negocio">Negocio</option>
                         </select><br><br>
                         <span>¿Tipo de lugar?</span><br>
-                        <select name="tipoLugar" id="tipoLugar">
+                        <select name="ubicacion" id="ubicacion">
                             <option value="0">Seleccione una opción</option>
                             <option value="Rural">Rural</option>
                             <option value="Urbano">Urbano</option>

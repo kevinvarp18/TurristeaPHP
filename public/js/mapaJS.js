@@ -5,7 +5,30 @@ var longitudSitio = 0.0;
 function initMap() {
     deleteMarkers();
     navigator.geolocation.getCurrentPosition(coordenadas);
+    var geocoder = new google.maps.Geocoder();
+
+    document.getElementById('btnBuscar').addEventListener('click', function () {
+        geocodeAddress(geocoder);
+    });
 }//Fin de la funcion initMap.
+
+function geocodeAddress(geocoder) {
+    var address = document.getElementById('nombreLugar').value;
+
+    geocoder.geocode({'address': address}, function (results, status) {
+        if (status === 'OK') {
+            
+            var latitud = results[0].geometry.location.lat();
+            var longitud = results[0].geometry.location.lng(); 
+            
+            document.getElementById('latitud').value = latitud;
+            document.getElementById('longitud').value = longitud;
+
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
 
 function coordenadas(position) {
     var directionsService = new google.maps.DirectionsService

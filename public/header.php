@@ -38,7 +38,7 @@
                             <li><a href="?controller=Principal&action=index">Inicio</a></li>
                             <?php if (!isset($_SESSION['tipoUsuario']) || (isset($_SESSION['tipoUsuario']) && strcmp($_SESSION['tipoUsuario'], 'u') === 0) ) { ?>
                                 <li><a href="?controller=Principal&action=contenidoTuristico&numPagina=1">Contenido Turístico</a></li>
-                                <li><a href="?controller=Principal&action=sitiosInteres">Sitios interés</a></li>
+                                <li><a href="?controller=Principal&action=sitiosInteres&numPagina=1">Sitios interés</a></li>
                                 <li><a href="?controller=Principal&action=formularioInteresesView">Formulario intereses</a></li>
                                 <li><a href="?controller=Principal&action=MapaSitio">Mapa sitio</a></li>
                                 <li><a href="?controller=Principal&action=creditos">Informaci&oacute;n</a></li>
@@ -50,7 +50,7 @@
                                     <li><a href="?controller=Usuario&action=cerrarSesion">Cerrar sesi&oacute;n</a></li>
                                 <?php } ?>
                             <?php } else { ?>
-                                <li><a href="?controller=Administrador&action=administrarContenido">Editar contenido</a></li>
+                                <li><a href="?controller=Administrador&action=agregarSitioTuristico">Agregar contenido</a></li>
                                 <li><a href="?controller=Administrador&action=agregarAdministradorView">Agregar administrador</a></li>
                                 <li><a href="?controller=Usuario&action=actualizarDatosView">Actualizar datos</a></li>
                                 <li><a href="?controller=Usuario&action=cerrarSesion">Cerrar sesi&oacute;n</a></li>

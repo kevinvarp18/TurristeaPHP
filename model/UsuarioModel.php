@@ -37,6 +37,13 @@ class UsuarioModel {
         return $resultado;
     }//Fin de la función insertarUsuario.
     
+    public function insertarAdministrador($usuario){
+        $query = $this->db->prepare("INSERT INTO usuario(email, nombre, tipoUsuario, edad, genero, password) VALUES (?, ?, ?, ?, ?, ?)");
+        $query->execute(array($usuario->getCorreo(), $usuario->getNombre(), 'a', $usuario->getEdad(), $usuario->getGenero(), $usuario->getContrasena()));
+        $resultado = $query->rowCount();
+        return $resultado;
+    }//Fin de la función insertarAdministrador.
+    
     public function obtenerDatosUsuario($correo){
         $query = $this->db->prepare("SELECT * FROM usuario WHERE email = ?");
         $query->execute(array($correo));
@@ -71,11 +78,11 @@ class UsuarioModel {
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         $rows = count($data);
-        
         if($rows > 0){
-            $_SESSION['precio'] = $data["precio"];
-            $_SESSION['tipoLugar'] = $data["ubicacion"];
-            $_SESSION['tipoViaje'] = $data["tipo_viaje"];
+            $_SESSION['precio'] = $data[0]["precio"];
+            $_SESSION['ubicacion'] = $data[0]["ubicacion"];
+            $_SESSION['tipo_viaje'] = $data[0]["tipo_viaje"];
+            $_SESSION['criterios'] = 1;
         }//Verifica si hay criterios definidos por el usuario anteriormente.
     }/* Fin del la función obtenerTodosLosUsuarios, que retorna el arreglo con 
     todos registros de los usuarios que existen en su respectiva tabla de la  base 

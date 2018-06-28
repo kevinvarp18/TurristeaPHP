@@ -43,10 +43,28 @@ class PrincipalController {
     
     public function sitiosInteres(){
         session_start();
-        if(isset($_SESSION['intereses']))
-            $this->view->show("SitiosInteresView", 1);
-        else
+        require 'controller/SitiosController.php';
+        require 'model/UsuarioModel.php';
+        $sitiosController = new SitiosController();
+        $numeroPagina = intval($_GET['numPagina']);
+        if(isset($_SESSION['criterios'])){
+            $sitios = $sitiosController->obtenerRecomendaciones();
+            $this->view->show("SitiosInteresView", array('sitio' => $sitios[$numeroPagina-1],'numPagina' => $numeroPagina));
+        }else if(isset($_SESSION['correo'])){
+            $sitios = $sitiosController->obtenerRecomendaciones();
+            if($sitios === 0){
+                $this->view->show("FormularioInteresesView");
+            }else{
+                $this->view->show("SitiosInteresView", array('sitio' => $sitios[$numeroPagina-1],'numPagina' => $numeroPagina));
+            }//Verifica si ya hay criterios previamente marcados por el usuario o no.
+        }else{
             $this->view->show("FormularioInteresesView");
+        }/* Si ya fueron definidos los criterios marcados por el usuario, entonces
+            recomienda los sitios. Sino, verifica si es un usuario logueado para
+            consultar si ya existen criterios previamente marcados, sino, entonces
+            devuelve la vista de formulario de intereses para que sea previamente
+            llenado.
+         */
     }//Fin de la función sitiosInteres.
 
   }//Fin de la clase UsuarioController.

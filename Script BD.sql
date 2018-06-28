@@ -1,6 +1,18 @@
 CREATE DATABASE `dbturris`;
 USE `dbturris`;
 
+CREATE TABLE `usuario` (
+  `email` varchar(60) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `tipoUsuario` CHAR NOT NULL,
+  `edad` int(11) NOT NULL,
+  `genero` varchar(1) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  PRIMARY KEY (`email`)
+);
+
+INSERT INTO `usuario` VALUES ('mcalvo96@gmail.com', 'Maynor Calvo', 'a', 22, 'H', 'mcalvo');
+
 CREATE TABLE `interesesusuario` (
   `idCliente` varchar(60) NOT NULL,
   `precio` varchar(25) NOT NULL,
@@ -48,17 +60,8 @@ CREATE TABLE `tabla_priori` (
 
 INSERT INTO `tabla_priori` VALUES (0.251064,'Cultural'),(0.246809,'Negocio'),(0.297872,'Familiar'),(0.204255,'Deportivo');
 
-CREATE TABLE `usuario` (
-  `email` varchar(60) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `edad` int(11) NOT NULL,
-  `genero` varchar(1) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  PRIMARY KEY (`email`)
-);
-
 DELIMITER $$
-CREATE PROCEDURE sp_criterios_usuario (email_ varchar(20), precio_ varchar(25), ubicacion_ varchar(25), tipo_viaje_ varchar(25))
+CREATE PROCEDURE sp_criterios_usuario (email_ varchar(60), precio_ varchar(25), ubicacion_ varchar(25), tipo_viaje_ varchar(25))
 BEGIN
     if Exists (Select * From interesesusuario where idCliente = email_) then
         update interesesusuario
@@ -70,4 +73,44 @@ BEGIN
 		insert into interesesusuario values (email_, precio_, ubicacion_, tipo_viaje_);
 	End if;                
 END $$
-DELIMITER ; 
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `sp_registrar_sitio`(precio_ varchar(25), ubicacion_ varchar(25), tipo_viaje_ varchar(25), descripcion_ varchar(1000), titulo_ varchar(500), latitud_ varchar(25), longitud_ varchar(25), imagen_ varchar(200), video_ varchar(400))
+BEGIN
+    	INSERT INTO sitios(`precio`, `ubicacion`, `tipo_viaje`, `descripcion`, `titulo`, `latitud`, `longitud`, `imagen`, `video`) 
+        VALUES (precio_,ubicacion_,tipo_viaje_,descripcion_,titulo_,latitud_,longitud_,imagen_,video_);
+        drop table tabla_n,tabla_priori,tabla_nc;
+        create table tabla_n(numero int,tipo_viaje varchar(25));
+        create table tabla_priori(priori float,tipo_viaje varchar(25));
+        create table tabla_nc(numero int,tipo varchar(25),tipo_viaje varchar(25));
+        insert into tabla_n values ((select count(*) from sitios where tipo_viaje = 'Cultural'),'Cultural');
+        insert into tabla_n values ((select count(*) from sitios where tipo_viaje = 'Negocio'),'Negocio');
+        insert into tabla_n values ((select count(*) from sitios where tipo_viaje = 'Familiar'),'Familiar');
+        insert into tabla_n values ((select count(*) from sitios where tipo_viaje = 'Deportivo'),'Deportivo');
+        insert into tabla_priori values(((select numero from tabla_n where tipo_viaje = 'Cultural')/(select count(*) from sitios)),'Cultural');
+        insert into tabla_priori values(((select numero from tabla_n where tipo_viaje = 'Negocio')/(select count(*) from sitios)),'Negocio');
+        insert into tabla_priori values(((select numero from tabla_n where tipo_viaje = 'Familiar')/(select count(*) from sitios)),'Familiar');
+        insert into tabla_priori values(((select numero from tabla_n where tipo_viaje = 'Deportivo')/(select count(*) from sitios)),'Deportivo');
+        insert into tabla_nc values((select count(*) from sitios where precio = '100-1000' and tipo_viaje = 'Cultural'),'100-1000','Cultural');
+        insert into tabla_nc values((select count(*) from sitios where precio = '100-1000' and tipo_viaje = 'Negocio'),'100-1000','Negocio');
+        insert into tabla_nc values((select count(*) from sitios where precio = '100-1000' and tipo_viaje = 'Familiar'),'100-1000','Familiar');
+        insert into tabla_nc values((select count(*) from sitios where precio = '100-1000' and tipo_viaje = 'Deportivo'),'100-1000','Deportivo');
+        insert into tabla_nc values((select count(*) from sitios where precio = '1001-5000' and tipo_viaje = 'Cultural'),'1001-5000','Cultural');
+        insert into tabla_nc values((select count(*) from sitios where precio = '1001-5000' and tipo_viaje = 'Negocio'),'1001-5000','Negocio');
+        insert into tabla_nc values((select count(*) from sitios where precio = '1001-5000' and tipo_viaje = 'Familiar'),'1001-5000','Familiar');
+        insert into tabla_nc values((select count(*) from sitios where precio = '1001-5000' and tipo_viaje = 'Deportivo'),'1001-5000','Deportivo');
+        insert into tabla_nc values((select count(*) from sitios where precio = '5001-15000' and tipo_viaje = 'Cultural'),'5001-15000','Cultural');
+        insert into tabla_nc values((select count(*) from sitios where precio = '5001-15000' and tipo_viaje = 'Negocio'),'5001-15000','Negocio');
+        insert into tabla_nc values((select count(*) from sitios where precio = '5001-15000' and tipo_viaje = 'Familiar'),'5001-15000','Familiar');
+        insert into tabla_nc values((select count(*) from sitios where precio = '5001-15000' and tipo_viaje = 'Deportivo'),'5001-15000','Deportivo');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Rural' and tipo_viaje = 'Cultural'),'Rural','Cultural');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Rural' and tipo_viaje = 'Negocio'),'Rural','Negocio');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Rural' and tipo_viaje = 'Familiar'),'Rural','Familiar');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Rural' and tipo_viaje = 'Deportivo'),'Rural','Deportivo');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Urbano' and tipo_viaje = 'Cultural'),'Urbano','Cultural');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Urbano' and tipo_viaje = 'Negocio'),'Urbano','Negocio');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Urbano' and tipo_viaje = 'Familiar'),'Urbano','Familiar');
+        insert into tabla_nc values((select count(*) from sitios where ubicacion = 'Urbano' and tipo_viaje = 'Deportivo'),'Urbano','Deportivo');
+END$$
+DELIMITER ;

@@ -7,9 +7,17 @@ class SitioModel {
         require_once 'libs/SPDO.php';
         $this->db = SPDO::singleton();
     }//Fin del constructor.
+    
+    public function insertarSitio($sitio){
+        echo "call sp_registrar_sitio('".$sitio->getPrecio()."', '".$sitio->getUbicacion()."', '".$sitio->getTipo_de_viaje()."', '".$sitio->getDescripcion()."', '".$sitio->getTitulo()."', '".$sitio->getLatitud()."', '".$sitio->getLongitud()."', '".$sitio->getImagen()."', '".$sitio->getVideo()."')";
+        $query = $this->db->prepare("call sp_registrar_sitio('".$sitio->getPrecio()."', '".$sitio->getUbicacion()."', '".$sitio->getTipo_de_viaje()."', '".$sitio->getDescripcion()."', '".$sitio->getTitulo()."', '".$sitio->getLatitud()."', '".$sitio->getLongitud()."', '".$sitio->getImagen()."', '".$sitio->getVideo()."')");
+        $query->execute();
+        $resultado = $query->rowCount();
+        return $resultado;
+    }//Fin de la función insertarSitio.
 
     public function obtenerTodosLosSitios() {
-        $query = $this->db->prepare("SELECT * FROM sitios;");
+        $query = $this->db->prepare("SELECT * FROM sitios");
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();

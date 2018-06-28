@@ -33,8 +33,10 @@ class UsuarioController {
             session_start();
             $_SESSION['tipoUsuario'] = $tipoUsuario;
             $_SESSION['correo'] = $_POST['email'];
+            $this->view->show("PrincipalView");
+        }else{
+            $this->view->show("IniciarSesionView");
         }//Si se autenticó al usuario, inicia session.
-        $this->view->show("PrincipalView");
     }//Fin de la función index.
 
     public function cerrarSesion(){
@@ -92,6 +94,7 @@ class UsuarioController {
     
     public function criteriosFormulario(){
         require 'controller/SitiosController.php';
+        require 'model/UsuarioModel.php';
         session_start();
         $rangoPrecio = '';
         $resultado = 2;
@@ -105,21 +108,23 @@ class UsuarioController {
         }//Verifica dentro de un rango la cantidad de dinero que dispone el usuario.
         
         if(isset($_SESSION['correo'])){
-            require 'model/UsuarioModel.php';
             $usuarioModel = new UsuarioModel();
-            $resultado = $usuarioModel->insertarIntereses($_SESSION['correo'], $rangoPrecio, $_POST['tipoLugar'], $_POST['tipoViaje']);
+            $resultado = $usuarioModel->insertarIntereses($_SESSION['correo'], $rangoPrecio, $_POST['ubicacion'], $_POST['tipoViaje']);
         }else{
-            $_SESSION['precio'] = $rangoPrecio;
-            $_SESSION['tipoLugar'] = $_POST['tipoLugar'];
-            $_SESSION['tipoViaje'] = $_POST['tipoViaje'];
+            $resultado = 0;
         }//Verifica si es un usuario registrado o no.
         
+        $_SESSION['precio'] = $rangoPrecio;
+        $_SESSION['ubicacion'] = $_POST['ubicacion'];
+        $_SESSION['tipo_viaje'] = $_POST['tipoViaje'];
+        $_SESSION['criterios'] = 1;
+        
         if($resultado === 2){
+            $this->view->show("FormularioInteresesView");
+        }else{
             $sitiosController = new SitiosController();
             $sitios = $sitiosController->obtenerRecomendaciones();
-            $this->view->show("PrincipalView", $sitios);
-        }else{
-            $this->view->show("FormularioInteresesView");
+            $this->view->show("SitiosInteresView", array('sitio' => $sitios[0],'numPagina' => 1));
         }//Si se insertó los criterios del usuario, lo lleva a mostrar la recomendación.
         
     }//Fin de la función criteriosFormulario.
