@@ -1,6 +1,9 @@
 var markers = [];
+var latitudSitio = 0.0;
+var longitudSitio = 0.0;
 
 function initMap() {
+    deleteMarkers();
     navigator.geolocation.getCurrentPosition(coordenadas);
 }//Fin de la funcion initMap.
 
@@ -17,8 +20,8 @@ function coordenadas(position) {
         stopover: true
     }, {
         location: {
-            lat: lat,
-            lng: lon
+            lat: latitudSitio,
+            lng: longitudSitio
         }, stopover: true
     }];
     var map = new google.maps.Map(document.getElementById('map'),
@@ -69,3 +72,13 @@ function coordenadas(position) {
         }
     });
 }//Fin de la función coordenadas.
+
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+}
+function deleteMarkers() {
+    setMapOnAll(null);
+    markers = [];
+}

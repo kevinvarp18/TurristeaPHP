@@ -36,7 +36,7 @@ include_once 'public/header.php';
 
             <div class="col-md-6 gallery-grids grid-mdl">
                 <a href="images/g4.jpg" class="gallery-box" data-lightbox="example-set" data-title="">
-                    <img src="public/images/g4.jpg" alt="" class="img-responsive zoom-img">
+                    <img src="public/images/sitios/g4.jpg" alt="" class="img-responsive zoom-img">
                 </a>
             </div>
             <div class="col-md-6 gallery-grids grid-mdl">

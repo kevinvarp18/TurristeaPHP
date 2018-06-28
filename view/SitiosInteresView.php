@@ -57,13 +57,13 @@ include_once 'public/header.php';
     </div>
 </div>
 <div class="navegacion">
-    <span>Página <?php echo $vars; ?> de 5</span><br>
+    <span>Página <?php echo $vars['numActualPagina']; ?> de 5</span><br>
     <?php
         for ($i = 1; $i <= 5; $i++) {
-            if ($vars === $i) {
+            if ($vars['numActualPagina'] === $i) {
     ?>
                 <span class="current"><?php echo $i; ?></span>
-    <?php   } else { ?>
+    <?php   } else if ($i > 0) { ?>
                 <a href="?controller=Principal&action=contenidoTuristico&numPagina=<?php echo $i; ?>" class="inactive"><?php echo $i; ?></a>
    <?php    }//Fin del if.
         }//Fin del for.

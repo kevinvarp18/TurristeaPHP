@@ -59,10 +59,26 @@ class UsuarioModel {
     }//Fin de la función actualizarUsuario.
     
     public function insertarIntereses($idUsuario, $rangoPrecio, $tipoLugar, $tipoViaje){
-        $query = $this->db->prepare("INSERT INTO interesesusuario (idCliente, precio, ubicacion, tipo_viaje) VALUES (?, ?, ?, ?)");
-        $query->execute(array($idUsuario, $rangoPrecio, $tipoLugar, $tipoViaje));
+        $query = $this->db->prepare("call sp_criterios_usuario('$idUsuario', '$rangoPrecio', '$tipoLugar', '$tipoViaje')");
+        $query->execute();
         $resultado = $query->rowCount();
         return $resultado;
     }//Fin de la función actualizarUsuario.
+    
+    public function obtenerCriteriosUsuario($email) {
+        $query = $this->db->prepare("SELECT * FROM interesesusuario WHERE idCliente = ?");
+        $query->execute(array($email));
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query->closeCursor();
+        $rows = count($data);
+        
+        if($rows > 0){
+            $_SESSION['precio'] = $data["precio"];
+            $_SESSION['tipoLugar'] = $data["ubicacion"];
+            $_SESSION['tipoViaje'] = $data["tipo_viaje"];
+        }//Verifica si hay criterios definidos por el usuario anteriormente.
+    }/* Fin del la función obtenerTodosLosUsuarios, que retorna el arreglo con 
+    todos registros de los usuarios que existen en su respectiva tabla de la  base 
+    de datos. */
     
 }//Fin de la clase UsuarioModel.

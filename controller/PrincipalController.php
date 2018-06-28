@@ -12,8 +12,13 @@ class PrincipalController {
     }//Fin de la función index.
     
     public function contenidoTuristico(){
+        require 'model/SitioModel.php';
+        require 'public/domain/Sitio.php';
+        
         $numeroPagina = intval($_GET['numPagina']);
-        $this->view->show("ContenidoTuristicoView", $numeroPagina);
+        $sitioModel = new SitioModel();
+        $sitio = $sitioModel->obtenerSitio($numeroPagina);
+        $this->view->show("ContenidoTuristicoView", array('sitio' => $sitio,'numPagina' => $numeroPagina));
     }//Fin de la función contenidoTuristico.
     
     public function creditos(){

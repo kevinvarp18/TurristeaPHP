@@ -8,7 +8,7 @@ include_once 'public/header.php';
             <h3 class="title">Formulario de intereses</h3>
             <div class="contact" id="contact">
                 <div class="contact-form">
-                    <form action="?controller=Usuario&action=formularioIntereses" method="post">
+                    <form action="?controller=Usuario&action=criteriosFormulario" method="post">
                         <span>¿De cuanto dinero dispones?</span><br>
                         <input id="dinero" name="dinero" type="number" required=""><br><br>
                         <span>¿Tipo de viaje?</span><br>

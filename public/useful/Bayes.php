@@ -3,13 +3,14 @@
 
         // ***************************** ATRIBUTOS *****************************
 
-        private $tipoCalculo;
         private $n;
         private $nc;
         private $valoresPorCaracteristica;
         private $p;
         private $p_priori;
         private $m;
+        private $p1;
+        private $p2;
         private $registros;
         private $registroUsuario;
         private $clases;
@@ -19,17 +20,15 @@
 
         // **************************** CONSTRUCTOR ****************************
 
-        function Bayes($tipoCalculo, $m, $registros, $registroUsuario, $clases) {
-            $this->tipoCalculo = $tipoCalculo;
-            $this->n = array();
+        function Bayes($m, $p1, $p2, $n, $priori, $ubicaciones, $precios) {
+            $this->n = $n;
             $this->nc = array();
             $this->valoresPorCaracteristica = array();
             $this->p = array();
-            $this->p_priori = array();
+            $this->p_priori = $priori;
             $this->m = $m;
-            $this->registros = $registros;
-            $this->registroUsuario = $registroUsuario;
-            $this->clases = array_values($clases);
+            $this->p1 = $p1;
+            $this->p2 = $p2;
             $this->frecuencias = array();
             $this->productoFrecuencias = array();
             $this->p_total = array();

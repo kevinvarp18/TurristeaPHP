@@ -90,10 +90,11 @@ class UsuarioController {
             $this->view->show("ActualizarDatosView");
     }//Fin de la función actualizarDatos.
     
-    public function formularioIntereses(){
+    public function criteriosFormulario(){
+        require 'controller/SitiosController.php';
         session_start();
         $rangoPrecio = '';
-        $resultado = 0;
+        $resultado = 2;
         
         if((intval($_POST['dinero']) >= 100 && intval($_POST['dinero']) <= 1000) || intval($_POST['dinero']) < 100){
             $rangoPrecio = '100-1000';
@@ -106,16 +107,22 @@ class UsuarioController {
         if(isset($_SESSION['correo'])){
             require 'model/UsuarioModel.php';
             $usuarioModel = new UsuarioModel();
-            $resultado = $usuarioModel->insertarIntereses($_SESSION['correo'], $rangoPrecio, $_POST['tipoLugal'], $_POST['tipoViaje']);
-            if($resultado === 0){
-                $this->view->show("FormularioInteresesView");
-            }else{
-                
-            }
+            $resultado = $usuarioModel->insertarIntereses($_SESSION['correo'], $rangoPrecio, $_POST['tipoLugar'], $_POST['tipoViaje']);
         }else{
-            
-        }
-    }//Fin de la función formularioIntereses.
+            $_SESSION['precio'] = $rangoPrecio;
+            $_SESSION['tipoLugar'] = $_POST['tipoLugar'];
+            $_SESSION['tipoViaje'] = $_POST['tipoViaje'];
+        }//Verifica si es un usuario registrado o no.
+        
+        if($resultado === 2){
+            $sitiosController = new SitiosController();
+            $sitios = $sitiosController->obtenerRecomendaciones();
+            $this->view->show("PrincipalView", $sitios);
+        }else{
+            $this->view->show("FormularioInteresesView");
+        }//Si se insertó los criterios del usuario, lo lleva a mostrar la recomendación.
+        
+    }//Fin de la función criteriosFormulario.
 
   }//Fin de la clase UsuarioController.
 ?>
